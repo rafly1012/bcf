@@ -24,8 +24,13 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
-        wayfinder({
-            formVariants: true,
-        }),
+
+        ...(process.env.NODE_ENV === 'development'
+            ? [
+                wayfinder({
+                    formVariants: true,
+                }),
+            ]
+            : []),
     ],
 });
