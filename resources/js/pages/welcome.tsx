@@ -89,7 +89,7 @@ export default function Welcome() {
               <header className="sticky top-0 z-50 w-full bg-primary">
                   <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-3">
                       <img
-                          src="/img/Danantara_Indonesia_Logo_vector (White).png"
+                          src="/img/danantara.png"
                           alt="Danantara Indonesia"
                           className="h-6 sm:h-8 object-contain"
                       />
@@ -99,7 +99,7 @@ export default function Welcome() {
                           Brilian Culture Fest
                       </span>
                       <img
-                          src="/img/NEW BRI_Tagline-02.png"
+                          src="/img/bri.png"
                           alt="BRI"
                           className="h-4 sm:h-6 object-contain"
                       />
