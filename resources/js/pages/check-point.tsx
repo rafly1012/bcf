@@ -40,6 +40,7 @@ const workunits = [
 
 export default function Checkpoint() {
     const [location, setLocation] = useState(null)
+    const [preview, setPreview] = useState(null)
     const fileRef = useRef(null)
 
     useEffect(() => {
@@ -143,11 +144,22 @@ export default function Checkpoint() {
                                                 Kamera
                                             </FieldLabel>
                                             <input
-                                                type="file"
-                                                accept="image/*"
-                                                capture="environment"
-                                                className="hidden"
+                                              ref={fileRef}
+                                              type="file"
+                                              accept="image/*"
+                                              capture="environment"
+                                              className="hidden"
+                                              onChange={(e) => {
+                                                const file = e.target.files[0]
+                                                if (file) {
+                                                  setPreview(URL.createObjectURL(file))
+                                                }
+                                              }}
                                             />
+
+                                            {preview && (
+                                              <img src={preview} className="mt-3 rounded-lg" />
+                                            )}
                                             <Button
                                               type="button"
                                               className="w-full flex items-center gap-2"
