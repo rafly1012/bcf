@@ -1,6 +1,7 @@
 "use client"
 
-import { Head } from '@inertiajs/react'
+import { Head, router } from '@inertiajs/react'
+import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -11,6 +12,8 @@ import {
 } from "@/components/ui/card"
 
 export default function Welcome() {
+
+  const [loadingId, setLoadingId] = useState(null)
 
   const checkpoints = [
     {
@@ -29,20 +32,19 @@ export default function Welcome() {
     },
   ]
 
-  // fungsi hitung jarak (meter)
   function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3
-    const φ1 = lat1 * Math.PI/180
-    const φ2 = lat2 * Math.PI/180
-    const Δφ = (lat2-lat1) * Math.PI/180
-    const Δλ = (lon2-lon1) * Math.PI/180
+    const φ1 = lat1 * Math.PI / 180
+    const φ2 = lat2 * Math.PI / 180
+    const Δφ = (lat2 - lat1) * Math.PI / 180
+    const Δλ = (lon2 - lon1) * Math.PI / 180
 
     const a =
-      Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+      Math.sin(Δφ / 2) ** 2 +
       Math.cos(φ1) * Math.cos(φ2) *
-      Math.sin(Δλ/2) * Math.sin(Δλ/2)
+      Math.sin(Δλ / 2) ** 2
 
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     return R * c
   }
 
@@ -52,18 +54,33 @@ export default function Welcome() {
       return
     }
 
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const userLat = pos.coords.latitude
-      const userLng = pos.coords.longitude
+    setLoadingId(cp.id)
 
-      const distance = getDistance(userLat, userLng, cp.lat, cp.lng)
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const userLat = pos.coords.latitude
+        const userLng = pos.coords.longitude
 
-      if (distance <= 50) {
-        window.location.href = `/checkin?lat=${cp.lat}&lng=${cp.lng}&name=${cp.name}`
-      } else {
-        alert(`Anda di luar area (${Math.round(distance)} meter)`)
+        const distance = getDistance(userLat, userLng, cp.lat, cp.lng)
+
+        if (distance <= 50) {
+          // ✅ redirect pakai Inertia (tanpa reload)
+          router.get('/checkpoint', {
+            lat: cp.lat,
+            lng: cp.lng,
+            name: cp.name,
+          })
+        } else {
+          alert(`Anda di luar area (${Math.round(distance)} meter)`)
+        }
+
+        setLoadingId(null)
+      },
+      (err) => {
+        setLoadingId(null)
+        alert("Gagal ambil lokasi. Izinkan GPS ya.")
       }
-    })
+    )
   }
 
   return (
@@ -83,12 +100,18 @@ export default function Welcome() {
 
               <CardHeader>
                 <CardTitle className="text-center">{cp.name}</CardTitle>
-                <CardDescription className="text-center">{cp.description}</CardDescription>
+                <CardDescription className="text-center">
+                  {cp.description}
+                </CardDescription>
               </CardHeader>
 
               <CardFooter>
-                <Button className="w-full" onClick={() => handleCheck(cp)}>
-                  View Event
+                <Button
+                  className="w-full"
+                  onClick={() => handleCheck(cp)}
+                  disabled={loadingId === cp.id}
+                >
+                  {loadingId === cp.id ? "Checking..." : "View Event"}
                 </Button>
               </CardFooter>
 
