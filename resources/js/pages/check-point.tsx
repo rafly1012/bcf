@@ -1,16 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { Head } from "@inertiajs/react"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Camera } from "lucide-react"
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldLegend,
-  FieldSeparator,
   FieldSet,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
@@ -22,7 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
 
 const workunits = [
   { label: "Unit Name", value: null },
@@ -42,6 +40,7 @@ const workunits = [
 
 export default function Checkpoint() {
     const [location, setLocation] = useState(null)
+    const fileRef = useRef(null)
 
     useEffect(() => {
       navigator.geolocation.getCurrentPosition((pos) => {
@@ -80,7 +79,7 @@ export default function Checkpoint() {
                         <form>
                             <FieldGroup>
                                 <FieldSet>
-                                    <FieldLegend>Check Point</FieldLegend>
+                                    <FieldLegend>Worker Data</FieldLegend>
                                     <FieldGroup>
                                         <Field>
                                             <FieldLabel htmlFor="personalnumber">
@@ -101,7 +100,7 @@ export default function Checkpoint() {
                                             </FieldLabel>
                                             <Input
                                                 id="fullname"
-                                                placeholder="Bank Rakyat Indonesia"
+                                                placeholder="PT. Bank Rakyat Indonesia (Persero) Tbk."
                                                 required
                                             />
                                         </Field>
@@ -136,6 +135,7 @@ export default function Checkpoint() {
                                             <Input
                                                 id="currentlocations"
                                                 value={location ? `${location.lat}, ${location.lng}` : "Loading lokasi..."} disabled
+                                                className="hidden"
                                             />
                                         </Field>
                                         <Field>
@@ -146,8 +146,16 @@ export default function Checkpoint() {
                                                 type="file"
                                                 accept="image/*"
                                                 capture="environment"
-                                                className="w-full"
+                                                className="hidden"
                                             />
+                                            <Button
+                                              type="button"
+                                              className="w-full flex items-center gap-2"
+                                              onClick={() => fileRef.current.click()}
+                                            >
+                                              <Camera className="w-5 h-5" />
+                                              Take Picture
+                                            </Button>
                                         </Field>
                                     </FieldGroup>
                                 </FieldSet>
