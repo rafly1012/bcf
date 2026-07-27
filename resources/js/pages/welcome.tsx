@@ -64,7 +64,7 @@ export default function Welcome() {
         const distance = getDistance(userLat, userLng, cp.lat, cp.lng)
 
         if (distance <= 50) {
-          router.get('/checkpoint', {
+          router.get('/check-point', {
             lat: cp.lat,
             lng: cp.lng,
             name: cp.name,
