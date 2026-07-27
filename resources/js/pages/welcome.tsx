@@ -16,9 +16,9 @@ export default function Welcome() {
     {
       id: 1,
       name: "Check Point 1",
-      description: "Area registrasi utama",
-      lat: -8.3423332,
-      lng: 122.9852116,
+      description: "BRI Kantor Cabang Larantuka",
+      lat: -8.342104,
+      lng: 122.986972,
     },
     {
       id: 2,
