@@ -23,11 +23,6 @@
         "VIEW_COMPILED_PATH": "/tmp",
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie",
-        "DB_CONNECTION": null,
-        "DB_HOST": null,
-        "DB_PORT": null,
-        "DB_DATABASE": null,
-        "DB_USERNAME": null
+        "SESSION_DRIVER": "cookie"
     }
 }
