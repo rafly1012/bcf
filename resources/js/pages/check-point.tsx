@@ -124,21 +124,11 @@ export default function Checkpoint() {
                                             </SelectContent>
                                             </Select>
                                         </Field>
-                                    </FieldGroup>
-                                </FieldSet>
-                                <FieldSet>
-                                    <FieldLegend>Check Point</FieldLegend>
-                                    <FieldGroup>
-                                        <Field>
-                                            <FieldLabel htmlFor="currentlocations">
-                                                Current Locations
-                                            </FieldLabel>
-                                            <Input
-                                                id="currentlocations"
-                                                value={location ? `${location.lat}, ${location.lng}` : "Loading lokasi..."} disabled
-                                                className="hidden"
-                                            />
-                                        </Field>
+                                        <Input
+                                            id="currentlocations"
+                                            value={location ? `${location.lat}, ${location.lng}` : "Loading lokasi..."} disabled
+                                            className="hidden"
+                                        />
                                         <Field>
                                             <FieldLabel htmlFor="currentlocations">
                                                 Kamera
