@@ -83,42 +83,58 @@ export default function Welcome() {
   }
 
   return (
-    <>
-      <Head title="Welcome" />
+      <>
+          <Head title="Welcome" />
+          <div className="min-h-screen">
+              <header className="sticky top-0 z-50 w-full bg-primary">
+                  <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-3">
+                      <img
+                          src="/storage/img/Danantara_Indonesia_Logo_vector (White).png"
+                          alt="Danantara Indonesia"
+                          className="h-6 sm:h-8 object-contain"
+                      />
+                      <span
+                          className="hidden sm:block text-[11px] tracking-[0.25em] uppercase text-background"
+                      >
+                          Brilian Culture Fest
+                      </span>
+                      <img
+                          src="/storage/img/NEW BRI_Tagline-02.png"
+                          alt="BRI"
+                          className="h-4 sm:h-6 object-contain"
+                      />
+                  </div>
+              </header>
+              <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
+                <main className="w-full max-w-5xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 px-6 pt-14 pb-10 text-center">
+                    {checkpoints.map((cp) => (
+                        <Card key={cp.id} className="overflow-hidden pt-0">
+                            <iframe
+                                src={`https://maps.google.com/maps?q=${cp.lat},${cp.lng}&z=15&output=embed`}
+                                className="w-full aspect-video border-0"
+                            />
 
-      <div className="flex min-h-screen flex-col bg-background p-6 text-primary lg:justify-center lg:p-8">
-        <div className="w-full max-w-5xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                            <CardHeader>
+                                <CardTitle className="text-center">{cp.name}</CardTitle>
+                                <CardDescription className="text-center">
+                                {cp.description}
+                                </CardDescription>
+                            </CardHeader>
 
-          {checkpoints.map((cp) => (
-            <Card key={cp.id} className="overflow-hidden pt-0">
-
-              <iframe
-                src={`https://maps.google.com/maps?q=${cp.lat},${cp.lng}&z=15&output=embed`}
-                className="w-full aspect-video border-0"
-              />
-
-              <CardHeader>
-                <CardTitle className="text-center">{cp.name}</CardTitle>
-                <CardDescription className="text-center">
-                  {cp.description}
-                </CardDescription>
-              </CardHeader>
-
-              <CardFooter>
-                <Button
-                  className="w-full"
-                  onClick={() => handleCheck(cp)}
-                  disabled={loadingId === cp.id}
-                >
-                  {loadingId === cp.id ? "Checking..." : "View Event"}
-                </Button>
-              </CardFooter>
-
-            </Card>
-          ))}
-
+                            <CardFooter>
+                                <Button
+                                    className="w-full"
+                                    onClick={() => handleCheck(cp)}
+                                    disabled={loadingId === cp.id}
+                                >
+                                    {loadingId === cp.id ? "Checking..." : "View Event"}
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                    ))}
+                </main>
+            </div>
         </div>
-      </div>
     </>
   )
 }
