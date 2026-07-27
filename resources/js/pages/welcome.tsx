@@ -64,7 +64,6 @@ export default function Welcome() {
         const distance = getDistance(userLat, userLng, cp.lat, cp.lng)
 
         if (distance <= 50) {
-          // ✅ redirect pakai Inertia (tanpa reload)
           router.get('/checkpoint', {
             lat: cp.lat,
             lng: cp.lng,
